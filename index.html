@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Música de fondo -->
+    <!-- Música de fondo personalizada -->
     <audio id="backgroundMusic" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        <source src="" type="audio/mpeg">
     </audio>
 
     <div class="container">
@@ -21,6 +21,11 @@
             
             <!-- Controles de música -->
             <div class="music-controls">
+                <div class="music-upload">
+                    <label for="musicUpload" class="btn-upload">🎵 Subir Mi Música</label>
+                    <input type="file" id="musicUpload" accept="audio/*" style="display: none;">
+                    <span id="musicName" class="music-name"></span>
+                </div>
                 <button id="musicBtn" class="btn-music" onclick="toggleMusic()">🎵 Activar Música</button>
                 <input type="range" id="volumeControl" min="0" max="100" value="50" onchange="changeVolume(this.value)" class="volume-slider">
             </div>
@@ -29,7 +34,7 @@
         <!-- Contador principal -->
         <div class="counter-section">
             <div class="counter-card">
-                <h2>Fecha del Inicio:</h2>
+                <h2>Desde el Primer Día:</h2>
                 <input type="date" id="anniversaryDate" class="date-input">
                 <button onclick="setupDate()" class="btn-setup">💕 Guardar Fecha</button>
             </div>
@@ -53,87 +58,33 @@
             </div>
         </div>
 
-        <!-- Línea de tiempo del año -->
-        <section class="timeline-section">
-            <h2>📅 Nuestras Salidas y Fechas Especiales</h2>
-            <div class="timeline-controls">
-                <button onclick="addDateModal()" class="btn-add-date">+ Agregar Salida/Fecha Especial</button>
-            </div>
-            <div id="timelineContainer" class="timeline">
-                <p class="empty-message">No hay fechas especiales aún. ¡Agrega la primera! ✨</p>
+        <!-- Salidas y Viajes con Fotos -->
+        <section class="trips-section">
+            <h2>✈️ Nuestras Salidas y Viajes</h2>
+            <button onclick="addTripModal()" class="btn-add-trip">+ Agregar Salida/Viaje</button>
+            <div id="tripsContainer" class="trips-grid">
+                <p class="empty-message">No hay salidas registradas. ¡Agrega tu primer viaje! ✨</p>
             </div>
         </section>
 
-        <!-- Momentos Más Especiales (Top Moments) -->
-        <section class="top-moments-section">
-            <h2>⭐ Momentos Más Especiales del Año</h2>
-            <div class="top-moments-description">
-                <p>Estos son los momentos que harán que nuestro primer año sea inolvidable</p>
-            </div>
-
-            <!-- Agregar Momento Especial -->
-            <div class="add-moment-section">
-                <h3>✨ Agregar un Momento Especial</h3>
-                <form id="momentForm" class="moment-form">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="momentDate">Fecha del Momento:</label>
-                            <input type="date" id="momentDate" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="momentEmoji">Emoji:</label>
-                            <input type="text" id="momentEmoji" placeholder="❤️, 🎂, ✈️" maxlength="2" value="💕">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="momentTitle">Título del Momento:</label>
-                        <input type="text" id="momentTitle" placeholder="Ej: Nuestro primer viaje juntos" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="momentDescription">Descripción:</label>
-                        <textarea id="momentDescription" placeholder="Cuéntame por qué este momento fue especial..." rows="4"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="momentImage">Foto (URL):</label>
-                        <input type="url" id="momentImage" placeholder="https://ejemplo.com/foto.jpg">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="momentImportance">
-                            <input type="checkbox" id="momentImportance"> Marcar como uno de los momentos TOP ⭐
-                        </label>
-                    </div>
-
-                    <button type="submit" class="btn-add">✨ Guardar Momento Especial</button>
-                </form>
-            </div>
-
-            <!-- Galería de Top Moments -->
-            <div id="topMomentsList" class="top-moments-grid">
-                <p class="empty-message">Aún no hay momentos especiales. ¡Crea recuerdos juntos! 💕</p>
+        <!-- Momentos Inolvidables -->
+        <section class="moments-section">
+            <h2>⭐ Momentos Inolvidables</h2>
+            <button onclick="addMomentModal()" class="btn-add-moment">+ Agregar Momento Especial</button>
+            <div id="momentsContainer" class="moments-grid">
+                <p class="empty-message">No hay momentos aún. ¡Crea recuerdos juntos! 💕</p>
             </div>
         </section>
 
-        <!-- Todos los momentos -->
-        <section class="all-moments-section">
-            <h2>💫 Todos Nuestros Momentos</h2>
-            <div id="allMomentsList" class="moments-grid">
-                <p class="empty-message">Aún no hay momentos. ¡Agrega el primero! 💕</p>
-            </div>
-        </section>
-
-        <!-- Galería de fotos especiales -->
+        <!-- Galería de todas las fotos -->
         <section class="gallery-section">
-            <h2>📸 Galería de Fotos</h2>
+            <h2>📸 Galería Completa</h2>
             <div id="galleryContainer" class="gallery-grid">
                 <p class="empty-message">No hay fotos aún. ¡Agrega fotos a tus momentos! 📷</p>
             </div>
         </section>
 
-        <!-- Carta de amor -->
+        <!-- Cartas de amor -->
         <section class="love-letter-section">
             <h2>💌 Cartas de Amor</h2>
             <div class="love-letter-form">
@@ -148,30 +99,17 @@
             </div>
         </section>
 
-        <!-- Contador de abrazos y besos -->
-        <section class="fun-section">
-            <h2>😊 Estadísticas Divertidas</h2>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <h3>Abrazos 🤗</h3>
-                    <input type="number" id="hugsCount" min="0" value="0">
-                    <button onclick="updateStat('hugs')" class="btn-stat">+ Abrazo</button>
-                </div>
-                <div class="stat-card">
-                    <h3>Besos 😘</h3>
-                    <input type="number" id="kissesCount" min="0" value="0">
-                    <button onclick="updateStat('kisses')" class="btn-stat">+ Beso</button>
-                </div>
-                <div class="stat-card">
-                    <h3>Películas vistas 🍿</h3>
-                    <input type="number" id="moviesCount" min="0" value="0">
-                    <button onclick="updateStat('movies')" class="btn-stat">+ Película</button>
-                </div>
-                <div class="stat-card">
-                    <h3>Viajes 🚗</h3>
-                    <input type="number" id="tripsCount" min="0" value="0">
-                    <button onclick="updateStat('trips')" class="btn-stat">+ Viaje</button>
-                </div>
+        <!-- Películas vistas juntos -->
+        <section class="movies-section">
+            <h2>🍿 Películas Vistas Juntos</h2>
+            <div class="movie-form">
+                <input type="text" id="movieTitle" placeholder="Nombre de la película">
+                <input type="date" id="movieDate">
+                <textarea id="movieNotes" placeholder="¿Qué te pareció?" rows="2"></textarea>
+                <button onclick="addMovie()" class="btn-add">🍿 Agregar Película</button>
+            </div>
+            <div id="moviesContainer" class="movies-list">
+                <p class="empty-message">No hay películas registradas. ¡Agrega una! 🎬</p>
             </div>
         </section>
 
@@ -186,37 +124,86 @@
                 <p class="empty-message">No hay deseos aún. ¡Sueña grande! 🌟</p>
             </div>
         </section>
+
+        <!-- Crucigrama -->
+        <section class="crossword-section">
+            <h2>🎮 Crucigrama de Nuestro Amor</h2>
+            <div class="crossword-setup">
+                <h3>Crea tu Crucigrama</h3>
+                <div id="wordsInput" class="words-input-container">
+                    <div class="word-input-group">
+                        <input type="text" placeholder="Palabra" class="word-input" maxlength="15">
+                        <input type="text" placeholder="Pregunta/Pista" class="clue-input">
+                        <button type="button" onclick="removeWordInput(this)" class="btn-delete">✕</button>
+                    </div>
+                </div>
+                <button type="button" onclick="addWordInput()" class="btn-secondary">+ Agregar Palabra</button>
+                <button type="button" onclick="generateCrossword()" class="btn-add">🎮 Generar Crucigrama</button>
+            </div>
+            <div id="crosswordContainer" class="crossword-container" style="display: none;">
+                <div id="crosswordGrid" class="crossword-grid"></div>
+                <div id="cluesContainer" class="clues-container">
+                    <h4>Pistas</h4>
+                    <div id="cluesList"></div>
+                </div>
+            </div>
+        </section>
     </div>
 
-    <!-- Modal para agregar fecha -->
-    <div id="dateModal" class="modal">
+    <!-- Modal para agregar salida -->
+    <div id="tripModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeDateModal()">&times;</span>
-            <h2>Agregar Salida/Fecha Especial</h2>
-            <form id="dateForm" class="form-modal">
+            <span class="close" onclick="closeTripModal()">&times;</span>
+            <h2>Agregar Salida/Viaje</h2>
+            <form id="tripForm" class="form-modal">
                 <div class="form-group">
-                    <label for="dateEventDate">Fecha:</label>
-                    <input type="date" id="dateEventDate" required>
+                    <label for="tripDate">Fecha:</label>
+                    <input type="date" id="tripDate" required>
                 </div>
                 <div class="form-group">
-                    <label for="dateEventTitle">Título:</label>
-                    <input type="text" id="dateEventTitle" placeholder="Ej: Cita a la playa" required>
+                    <label for="tripTitle">Lugar/Título:</label>
+                    <input type="text" id="tripTitle" placeholder="Ej: Playa de las Olas" required>
                 </div>
                 <div class="form-group">
-                    <label for="dateEventDescription">Descripción:</label>
-                    <textarea id="dateEventDescription" placeholder="¿A dónde irán?" rows="3"></textarea>
+                    <label for="tripDescription">Descripción:</label>
+                    <textarea id="tripDescription" placeholder="¿Qué pasó en esta salida?" rows="4"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="dateEventType">Tipo de evento:</label>
-                    <select id="dateEventType">
-                        <option value="cita">Cita 💑</option>
-                        <option value="viaje">Viaje ✈️</option>
-                        <option value="celebracion">Celebración 🎉</option>
-                        <option value="aniversario">Aniversario 🎂</option>
-                        <option value="otro">Otro ✨</option>
-                    </select>
+                    <label for="tripImage">Foto de la Salida:</label>
+                    <input type="file" id="tripImage" accept="image/*">
                 </div>
-                <button type="submit" class="btn-add">Guardar Fecha</button>
+                <button type="submit" class="btn-add">Guardar Salida</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para agregar momento -->
+    <div id="momentModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeMomentModal()">&times;</span>
+            <h2>Agregar Momento Inolvidable</h2>
+            <form id="momentForm" class="form-modal">
+                <div class="form-group">
+                    <label for="momentDate">Fecha:</label>
+                    <input type="date" id="momentDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="momentTitle">Título del Momento:</label>
+                    <input type="text" id="momentTitle" placeholder="Ej: Nuestro primer beso" required>
+                </div>
+                <div class="form-group">
+                    <label for="momentEmoji">Emoji:</label>
+                    <input type="text" id="momentEmoji" placeholder="❤️, 🌹, ✨" maxlength="2" value="💕">
+                </div>
+                <div class="form-group">
+                    <label for="momentDescription">Descripción:</label>
+                    <textarea id="momentDescription" placeholder="Cuéntame qué pasó en este momento especial..." rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="momentImage">Foto del Momento:</label>
+                    <input type="file" id="momentImage" accept="image/*">
+                </div>
+                <button type="submit" class="btn-add">Guardar Momento</button>
             </form>
         </div>
     </div>
