@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestro Primer Año Juntos 💕</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Música de fondo -->
+    <audio id="backgroundMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container">
+        <!-- Encabezado especial -->
+        <header class="header">
+            <div class="heart-animation">💕</div>
+            <h1>Nuestro Primer Año Juntos</h1>
+            <p class="subtitle">Un año de amor, risas y momentos inolvidables</p>
+            
+            <!-- Controles de música -->
+            <div class="music-controls">
+                <button id="musicBtn" class="btn-music" onclick="toggleMusic()">🎵 Activar Música</button>
+                <input type="range" id="volumeControl" min="0" max="100" value="50" onchange="changeVolume(this.value)" class="volume-slider">
+            </div>
+        </header>
+
+        <!-- Contador principal -->
+        <div class="counter-section">
+            <div class="counter-card">
+                <h2>Fecha del Inicio:</h2>
+                <input type="date" id="anniversaryDate" class="date-input">
+                <button onclick="setupDate()" class="btn-setup">💕 Guardar Fecha</button>
+            </div>
+            <div class="counter-display">
+                <div class="counter-item">
+                    <span class="counter-number" id="days">0</span>
+                    <span class="counter-label">Días</span>
+                </div>
+                <div class="counter-item">
+                    <span class="counter-number" id="hours">0</span>
+                    <span class="counter-label">Horas</span>
+                </div>
+                <div class="counter-item">
+                    <span class="counter-number" id="minutes">0</span>
+                    <span class="counter-label">Minutos</span>
+                </div>
+                <div class="counter-item">
+                    <span class="counter-number" id="seconds">0</span>
+                    <span class="counter-label">Segundos</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Línea de tiempo del año -->
+        <section class="timeline-section">
+            <h2>📅 Nuestras Salidas y Fechas Especiales</h2>
+            <div class="timeline-controls">
+                <button onclick="addDateModal()" class="btn-add-date">+ Agregar Salida/Fecha Especial</button>
+            </div>
+            <div id="timelineContainer" class="timeline">
+                <p class="empty-message">No hay fechas especiales aún. ¡Agrega la primera! ✨</p>
+            </div>
+        </section>
+
+        <!-- Momentos Más Especiales (Top Moments) -->
+        <section class="top-moments-section">
+            <h2>⭐ Momentos Más Especiales del Año</h2>
+            <div class="top-moments-description">
+                <p>Estos son los momentos que harán que nuestro primer año sea inolvidable</p>
+            </div>
+
+            <!-- Agregar Momento Especial -->
+            <div class="add-moment-section">
+                <h3>✨ Agregar un Momento Especial</h3>
+                <form id="momentForm" class="moment-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="momentDate">Fecha del Momento:</label>
+                            <input type="date" id="momentDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="momentEmoji">Emoji:</label>
+                            <input type="text" id="momentEmoji" placeholder="❤️, 🎂, ✈️" maxlength="2" value="💕">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="momentTitle">Título del Momento:</label>
+                        <input type="text" id="momentTitle" placeholder="Ej: Nuestro primer viaje juntos" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="momentDescription">Descripción:</label>
+                        <textarea id="momentDescription" placeholder="Cuéntame por qué este momento fue especial..." rows="4"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="momentImage">Foto (URL):</label>
+                        <input type="url" id="momentImage" placeholder="https://ejemplo.com/foto.jpg">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="momentImportance">
+                            <input type="checkbox" id="momentImportance"> Marcar como uno de los momentos TOP ⭐
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn-add">✨ Guardar Momento Especial</button>
+                </form>
+            </div>
+
+            <!-- Galería de Top Moments -->
+            <div id="topMomentsList" class="top-moments-grid">
+                <p class="empty-message">Aún no hay momentos especiales. ¡Crea recuerdos juntos! 💕</p>
+            </div>
+        </section>
+
+        <!-- Todos los momentos -->
+        <section class="all-moments-section">
+            <h2>💫 Todos Nuestros Momentos</h2>
+            <div id="allMomentsList" class="moments-grid">
+                <p class="empty-message">Aún no hay momentos. ¡Agrega el primero! 💕</p>
+            </div>
+        </section>
+
+        <!-- Galería de fotos especiales -->
+        <section class="gallery-section">
+            <h2>📸 Galería de Fotos</h2>
+            <div id="galleryContainer" class="gallery-grid">
+                <p class="empty-message">No hay fotos aún. ¡Agrega fotos a tus momentos! 📷</p>
+            </div>
+        </section>
+
+        <!-- Carta de amor -->
+        <section class="love-letter-section">
+            <h2>💌 Cartas de Amor</h2>
+            <div class="love-letter-form">
+                <textarea id="loveLetterText" placeholder="Escribe algo especial para tu pareja..." rows="6"></textarea>
+                <div class="letter-controls">
+                    <input type="text" id="letterAuthor" placeholder="Firmado por:" maxlength="50">
+                    <button onclick="saveLoveLetter()" class="btn-add">💌 Guardar Carta</button>
+                </div>
+            </div>
+            <div id="loveLettersList" class="love-letters-container">
+                <p class="empty-message">No hay cartas aún. ¡Escribe una! 💕</p>
+            </div>
+        </section>
+
+        <!-- Contador de abrazos y besos -->
+        <section class="fun-section">
+            <h2>😊 Estadísticas Divertidas</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Abrazos 🤗</h3>
+                    <input type="number" id="hugsCount" min="0" value="0">
+                    <button onclick="updateStat('hugs')" class="btn-stat">+ Abrazo</button>
+                </div>
+                <div class="stat-card">
+                    <h3>Besos 😘</h3>
+                    <input type="number" id="kissesCount" min="0" value="0">
+                    <button onclick="updateStat('kisses')" class="btn-stat">+ Beso</button>
+                </div>
+                <div class="stat-card">
+                    <h3>Películas vistas 🍿</h3>
+                    <input type="number" id="moviesCount" min="0" value="0">
+                    <button onclick="updateStat('movies')" class="btn-stat">+ Película</button>
+                </div>
+                <div class="stat-card">
+                    <h3>Viajes 🚗</h3>
+                    <input type="number" id="tripsCount" min="0" value="0">
+                    <button onclick="updateStat('trips')" class="btn-stat">+ Viaje</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Deseos para el futuro -->
+        <section class="wishes-section">
+            <h2>🌟 Nuestros Deseos para el Futuro</h2>
+            <form id="wishForm" class="wish-form">
+                <textarea id="wishText" placeholder="¿Qué deseos tienes para los próximos años juntos?" rows="4"></textarea>
+                <button type="submit" class="btn-add">🌟 Agregar Deseo</button>
+            </form>
+            <div id="wishesList" class="wishes-container">
+                <p class="empty-message">No hay deseos aún. ¡Sueña grande! 🌟</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal para agregar fecha -->
+    <div id="dateModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeDateModal()">&times;</span>
+            <h2>Agregar Salida/Fecha Especial</h2>
+            <form id="dateForm" class="form-modal">
+                <div class="form-group">
+                    <label for="dateEventDate">Fecha:</label>
+                    <input type="date" id="dateEventDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="dateEventTitle">Título:</label>
+                    <input type="text" id="dateEventTitle" placeholder="Ej: Cita a la playa" required>
+                </div>
+                <div class="form-group">
+                    <label for="dateEventDescription">Descripción:</label>
+                    <textarea id="dateEventDescription" placeholder="¿A dónde irán?" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="dateEventType">Tipo de evento:</label>
+                    <select id="dateEventType">
+                        <option value="cita">Cita 💑</option>
+                        <option value="viaje">Viaje ✈️</option>
+                        <option value="celebracion">Celebración 🎉</option>
+                        <option value="aniversario">Aniversario 🎂</option>
+                        <option value="otro">Otro ✨</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-add">Guardar Fecha</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
